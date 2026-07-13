@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Xiaomi-Robotics-U0"
+version = "0.1.0"
+description = "Xiaomi-Robotics-U0 inference package"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+dependencies = [
+  "accelerate>=0.20,<2",
+  "einops>=0.7,<1",
+  "huggingface-hub>=0.24,<1",
+  "imageio==2.37.0",
+  "imageio-ffmpeg==0.6.0",
+  "numpy>=2,<2.3",
+  "omegaconf==2.3.0",
+  "pillow>=9,<12",
+  "safetensors>=0.4,<1",
+  "tiktoken>=0.12,<1",
+]
+
+[project.optional-dependencies]
+ar = [
+  "torch>=2.6,<2.9",
+  "torchvision>=0.15,<0.24",
+  "transformers==4.48.2",
+]
+vllm = [
+  "torch==2.8.0",
+  "torchaudio==2.8.0",
+  "torchvision==0.23.0",
+  "transformers==4.55.2",
+  "prometheus-fastapi-instrumentator>=7,<8",
+  "vllm==0.11.0",
+]
+demo = ["fastapi>=0.115,<1", "gradio>=5.49,<6", "requests>=2.32,<3", "uvicorn>=0.30,<1"]
+# DA3 itself is installed in the same environment with --no-deps when upstream
+# metadata still pins numpy<2 too narrowly; see requirements-depth.txt.
+depth = [
+  "numpy>=2,<2.3",
+  "addict",
+  "trimesh",
+  "opencv-python-headless>=4.12,<5",
+  "xformers",
+  "open3d",
+  "evo",
+  "e3nn",
+  "moviepy==1.0.3",
+  "plyfile",
+  "pillow-heif",
+  "pycolmap",
+  "matplotlib",
+  "tqdm",
+  "typer>=0.9.0",
+]
+
+[tool.setuptools]
+packages = {find = {include = ["xr_u0_ar*", "xr_u0_flashar*"]}}
+
+[tool.setuptools.package-data]
+xr_u0_ar = [
+  "tokenizer_unis_ibq/*.tiktoken",
+  "tokenizer_unis_ibq/*_tokens.txt",
+  "tokenizer_unis_ibq/*.json",
+  "tokenizer_unis_ibq/*.md",
+  "tokenizer_unis_ibq/*.py",
+  "third_party/vllm/inputs/*.patch",
+  "third_party/vllm/model_executor/models/*.patch",
+  "third_party/vllm/transformers_utils/configs/*.patch",
+  "third_party/vllm/v1/core/sched/*.patch",
+  "third_party/vllm/v1/engine/*.patch",
+  "third_party/vllm/v1/sample/logits_processor/*.patch",
+  "third_party/vllm/v1/worker/*.patch",
+]
+xr_u0_flashar = [
+  "third_party/vllm/*.md",
+  "third_party/vllm/inputs/*.patch",
+  "third_party/vllm/model_executor/models/*.patch",
+  "third_party/vllm/transformers_utils/configs/*.patch",
+  "third_party/vllm/v1/core/sched/*.patch",
+  "third_party/vllm/v1/engine/*.patch",
+  "third_party/vllm/v1/sample/logits_processor/*.patch",
+  "third_party/vllm/v1/worker/*.patch",
+]

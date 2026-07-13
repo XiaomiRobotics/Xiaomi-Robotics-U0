@@ -1,0 +1,10 @@
+{
+  "model_max_length": 1000000000000000000,
+  "tokenizer_class": "UNISTokenizer",
+  "auto_map": {
+    "AutoTokenizer": [
+      "tokenization_unis.UNISTokenizer",
+      null
+    ]
+  }
+}

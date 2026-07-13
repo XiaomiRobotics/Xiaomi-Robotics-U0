@@ -1,0 +1,9 @@
+diff --git a/vllm/model_executor/models/registry.py b/vllm/model_executor/models/registry.py
+index e1fc7e11a..6b8718b88 100644
+--- a/vllm/model_executor/models/registry.py
++++ b/vllm/model_executor/models/registry.py
+@@ -219,3 +219,4 @@ _MULTIMODAL_MODELS = {
++    "UNISForCausalLM": ("unis", "UNISForCausalLM"),
+     "AriaForConditionalGeneration": ("aria", "AriaForConditionalGeneration"),
+     "AyaVisionForConditionalGeneration": ("aya_vision", "AyaVisionForConditionalGeneration"),  # noqa: E501
+     "Blip2ForConditionalGeneration": ("blip2", "Blip2ForConditionalGeneration"),

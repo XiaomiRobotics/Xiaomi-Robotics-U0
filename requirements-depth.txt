@@ -1,0 +1,24 @@
+# Optional DA3 runtime dependencies for RGB Transfer.
+#
+# Install these in the same Xiaomi-Robotics-U0 environment. The upstream depth-anything-3
+# package metadata currently pins numpy<2, but the runtime is expected to work
+# with the NumPy 2 stack used by Xiaomi-Robotics-U0/vLLM. After this file, install the DA3
+# package itself without transitive dependency resolution:
+#
+#   python -m pip install --no-deps "depth-anything-3 @ git+https://github.com/ByteDance-Seed/Depth-Anything-3.git"
+
+numpy>=2,<2.3
+addict
+trimesh
+opencv-python-headless>=4.12,<5
+xformers
+open3d
+evo
+e3nn
+moviepy==1.0.3
+plyfile
+pillow-heif
+pycolmap
+matplotlib
+tqdm
+typer>=0.9.0
