@@ -6,7 +6,7 @@ Xiaomi Robotics
 <p>
 <strong>Project Page</strong>: <a href="https://robotics.xiaomi.com/xiaomi-robotics-u0.html">Website</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <strong>HF Models</strong>: <a href="https://huggingface.co/collections/XiaomiRobotics/xiaomi-robotics-u0">Collection</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-<strong>Paper</strong>: TBD
+<strong>Paper</strong>: <a href="https://arxiv.org/abs/2607.11643">Arxiv</a>&nbsp;&nbsp;
 </p>
 </div>
 
@@ -246,4 +246,15 @@ Open `http://127.0.0.1:7860`. Outputs are saved under
 
 ## 4. Citation
 
-Citation information is TBD.
+If you find this work useful, please cite:
+
+```bibtex
+@misc{li2026xiaomiroboticsu0,
+  title         = {{Xiaomi-Robotics-U0}: Unified Embodied Synthesis with World Foundation Model},
+  author        = {Xinghang Li and Jun Guo and Qiwei Li and Long Qian and Hang Lai and Yueze Wang and Hongyu Yan and Jiahang Cao and Xi Chen and Jingen Qu and Jiaxi Song and Nan Sun and Hanye Zhao and Futeng Liu and Wanli Peng and Heyun Wang and Yunhong Wang and Caoyu Xia and Jack Zhao and Diyun Xiang and Hangjun Ye and Heng Qu and Huaping Liu and Jason Li},
+  year          = {2026},
+  eprint        = {2607.11643},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/abs/2607.11643}
+}
+```
