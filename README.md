@@ -4,9 +4,11 @@
 Xiaomi Robotics
 </p>
 <p>
-<strong>Project Page</strong>: <a href="https://robotics.xiaomi.com/xiaomi-robotics-u0.html">Website</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-<strong>HF Models</strong>: <a href="https://huggingface.co/collections/XiaomiRobotics/xiaomi-robotics-u0">Collection</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-<strong>Paper</strong>: <a href="https://arxiv.org/abs/2607.11643">Arxiv</a>&nbsp;&nbsp;
+<a href="https://arxiv.org/abs/2607.11643"><img src="https://img.shields.io/badge/arXiv-2607.11643-b31b1b.svg" alt="Paper" /></a>
+<a href="https://robotics.xiaomi.com/xiaomi-robotics-u0.html"><img src="https://img.shields.io/badge/Project-Page-2e7d32.svg" alt="Project Page" /></a>
+<a href="https://huggingface.co/collections/XiaomiRobotics/xiaomi-robotics-u0"><img src="https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face-ffd21e.svg" alt="Hugging Face" /></a>
+<a href="https://modelscope.cn/collections/XiaomiRobotics/Xiaomi-Robotics-U0"><img src="https://img.shields.io/badge/ModelScope-Collection-624aff.svg?logo=modelscope&amp;logoColor=white" alt="ModelScope" /></a>
+<a href="https://github.com/XiaomiRobotics/Xiaomi-Robotics-U0/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License" /></a>
 </p>
 </div>
 
@@ -54,11 +56,11 @@ Xiaomi-Robotics-U0 exposes five public task types through one autoregressive fra
 
 The currently released model weights support `Scene Gen`, `Transfer`, `T2I`, and `X2I`.
 
-| Model name | HF Weight |
-| ---------- | --------- |
-| Xiaomi-Robotics-U0 | [Hugging Face](https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-U0) |
-| Xiaomi-Robotics-U0-FlashAR | [Hugging Face](https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-U0-FlashAR) |
-| VisionTokenizer | [Hugging Face](https://huggingface.co/BAAI/Emu3.5-VisionTokenizer/) |
+| Model name | Hugging Face Weight | ModelScope Weight |
+| ---------- | ------------------- | ----------------- |
+| Xiaomi-Robotics-U0 | [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face-ffd21e.svg)](https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-U0) | [![ModelScope](https://img.shields.io/badge/ModelScope-Model-624aff.svg?logo=modelscope&logoColor=white)](https://modelscope.cn/models/XiaomiRobotics/Xiaomi-Robotics-U0) |
+| Xiaomi-Robotics-U0-FlashAR | [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face-ffd21e.svg)](https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-U0-FlashAR) | [![ModelScope](https://img.shields.io/badge/ModelScope-Model-624aff.svg?logo=modelscope&logoColor=white)](https://modelscope.cn/models/XiaomiRobotics/Xiaomi-Robotics-U0-FlashAR) |
+| VisionTokenizer | [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-Hugging_Face-ffd21e.svg)](https://huggingface.co/BAAI/Emu3.5-VisionTokenizer/) | [![ModelScope](https://img.shields.io/badge/ModelScope-Model-624aff.svg?logo=modelscope&logoColor=white)](https://modelscope.cn/models/BAAI/Emu3.5-VisionTokenizer) |
 
 The `Xiaomi-Robotics-U0-Video` checkpoint is coming soon.
 
@@ -72,7 +74,7 @@ Create one conda environment for the backend you plan to run:
 | -------- | ----------------- | ----- |
 | Eager inference | `xr-u0-eager` | Works for both `--engine ar` and `--engine flashar`. |
 | AR vLLM inference | `xr-u0-ar-vllm` | Applies the AR vLLM patch set. |
-| Xiaomi-Robotics-U0-FlashAR vLLM inference | `xr-u0-flashar-vllm` | Applies the FlashAR vLLM patch set for speed-up. |
+| FlashAR vLLM inference | `xr-u0-flashar-vllm` | Applies the FlashAR vLLM patch set for speed-up. |
 
 ```bash
 git clone https://github.com/XiaomiRobotics/Xiaomi-Robotics-U0.git
