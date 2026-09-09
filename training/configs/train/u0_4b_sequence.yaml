@@ -1,0 +1,62 @@
+model:
+  type: causal_lm
+  llm:
+    checkpoint: models/Xiaomi-Robotics-U0-4B-Sequence
+    tokenizer_path: models/Xiaomi-Robotics-U0-4B-Sequence
+    special_tokens_file: models/Xiaomi-Robotics-U0-4B-Sequence/unis_vision_tokens.txt
+    visual_token_offset: 151854
+    visual_vocab_size: 131072
+    torch_dtype: bfloat16
+    attention_implementation: flash_attention_2
+    attention_dropout: 0.1
+    hidden_dropout: 0.1
+  loss:
+    image_weight: 1.0
+    text_weight: 1.0
+    chunk_tokens: 256
+
+data:
+  dataset_config_file: configs/data/sequence_32k_megatron_packed.json
+  batch_size: 1
+  num_workers: 2
+  prefetch_factor: 2
+  loader_timeout_seconds: 120
+  max_length: 32768
+  prompt_template: "{text}"
+
+parallel:
+  ulysses_size: 1
+
+activation_checkpoint:
+  enabled: true
+  every_n_layers: 1
+  use_reentrant: false
+
+fsdp:
+  sharding_strategy: HYBRID_SHARD
+  backward_prefetch: BACKWARD_PRE
+  cpu_offload: false
+  num_shard: 8
+  sync_each_micro_batch: 1
+  sharded_init: true
+
+training:
+  results_dir: outputs/u0_4b_sequence
+  seed: 42
+  total_steps: 10000
+  global_batch_size: 512
+  warmup_steps: 100
+  lr_scheduler: cosine
+  lr: 5.0e-5
+  min_lr: 1.0e-6
+  beta1: 0.9
+  beta2: 0.95
+  eps: 1.0e-8
+  weight_decay: 0.1
+  max_grad_norm: 5.0
+  log_sample_ids: true
+  log_every: 10
+  save_every: 500
+  save_final: false
+  first_checkpoint_step: 0
+  resume_from: null
