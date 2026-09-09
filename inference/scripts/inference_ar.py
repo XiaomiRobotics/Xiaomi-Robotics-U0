@@ -530,12 +530,17 @@ def _length_summary(lengths: list[int]) -> dict[str, float | int]:
 
 
 def _write_timing(path: Path, payload: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    audit_dir = os.environ.get("U0_AUDIT_DIR")
+    if audit_dir:
+        path = Path(audit_dir) / path.name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    else:
+        print(json.dumps(payload, ensure_ascii=False))
 
 
 def _is_video_task(cfg_obj: SimpleNamespace) -> bool:
-    return cfg_obj.task_type.replace("_", " ").replace("-", " ") == "video gen"
+    return cfg_obj.task_type.replace("_", " ").replace("-", " ") in {"video gen", "interleave"}
 
 
 def _save_generation_output(
@@ -577,9 +582,9 @@ def _save_generation_output(
             require_image=require_image,
         )
 
-    from xr_u0_ar.outputs import save_generated_sequence
+    from xr_u0_ar.outputs import save_image_sequence
 
-    return save_generated_sequence(
+    return save_image_sequence(
         tokens,
         tokenizer,
         vision_tokenizer,
@@ -610,6 +615,11 @@ def run_eager(cfg) -> None:
         attn_implementation=str(cfg_get(cfg, "attn_implementation", "eager")),
         **hub_kwargs,
     )
+    if cfg_obj.task_type in {"interleave_subtask", "interleave_video"}:
+        from xr_u0_ar.sequence_runtime import run_sequence_cases
+        run_sequence_cases(cfg, model, tokenizer, vision_tokenizer)
+        return
+    torch.manual_seed(int(cfg_get(cfg, "seed", 42)))
     cfg_obj.special_token_ids = special_token_ids(tokenizer)
     input_device = _model_input_device(model)
     device_metadata = _hf_device_metadata(model, cfg)

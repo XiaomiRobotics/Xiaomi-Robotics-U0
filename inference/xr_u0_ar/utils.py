@@ -34,6 +34,7 @@ def build_text_tokenizer(
     )
     tokenizer = AutoTokenizer.from_pretrained(
         tokenizer_dir,
+        vocab_file=osp.join(tokenizer_dir, "unis.tiktoken"),
         special_tokens_file=osp.join(tokenizer_dir, "unis_vision_tokens.txt"),
         trust_remote_code=True,
     )

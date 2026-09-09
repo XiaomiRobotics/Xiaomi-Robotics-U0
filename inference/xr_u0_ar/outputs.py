@@ -9,6 +9,26 @@ from typing import Any, Iterable
 from PIL import Image
 
 
+def save_image_sequence(tokens, tokenizer, vision_tokenizer, output_path, **kwargs):
+    """Save generated images without duplicate manifests or token text."""
+    from types import SimpleNamespace
+    from xr_u0_ar.generation import multimodal_decode
+
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = tokenizer.decode(tokens, skip_special_tokens=False)
+    images = [value for kind, value in multimodal_decode(text, tokenizer, vision_tokenizer)
+              if kind == "image" and isinstance(value, Image.Image)]
+    if not images:
+        raise RuntimeError("No image was decoded from the generated sequence")
+    paths = []
+    for index, image in enumerate(images):
+        target = _image_path(path, index)
+        image.save(target)
+        paths.append(target)
+    return SimpleNamespace(primary_path=paths[0], image_paths=paths)
+
+
 @dataclass
 class SavedGenerationOutput:
     output_path: Path

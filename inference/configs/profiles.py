@@ -15,7 +15,7 @@ def profile_config(profile: str, engine: str, backend: str, task: str) -> dict:
     if backend == "vllm":
         return {
             "tensor_parallel_size": 2,
-            "max_num_seqs": 2 if task == "video_gen" else 4,
+            "max_num_seqs": 4,
         }
 
     raise ValueError(f"unsupported backend: {backend}")

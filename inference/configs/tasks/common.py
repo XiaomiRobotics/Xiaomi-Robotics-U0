@@ -1,13 +1,8 @@
 from __future__ import annotations
 
-import json
-import os
 from copy import deepcopy
-from pathlib import Path
 from typing import Any
 
-
-LEGACY_JSONL_ENV = "XR_U0_VIDEO_GEN_LEGACY_JSONL"
 
 
 def ar_image_sampling(max_new_tokens: int) -> dict[str, Any]:
@@ -84,36 +79,3 @@ def override_or_examples(
         case[prompt_field] = prompt
     set_reference(case, reference_images)
     return repeat_case(prefix, case, num_samples)
-
-
-def legacy_output_name(case: dict[str, Any], fallback: str) -> str:
-    image_list = case.get("image_list") or case.get("image")
-    if isinstance(image_list, list) and image_list:
-        first = image_list[0]
-        if isinstance(first, str) and first.strip():
-            return Path(first).stem
-    if isinstance(image_list, str) and image_list.strip():
-        return Path(image_list).stem
-    return fallback
-
-
-def load_legacy_video_cases(limit: int, jsonl_path: str | None = None) -> dict[str, Any] | None:
-    value = jsonl_path or os.environ.get(LEGACY_JSONL_ENV)
-    if not value:
-        return None
-    if limit < 1:
-        raise ValueError("num_samples must be at least 1")
-
-    cases: dict[str, Any] = {}
-    with Path(value).open("r", encoding="utf-8") as handle:
-        for index, line in enumerate(handle):
-            if index >= limit:
-                break
-            case = json.loads(line)
-            output_name = legacy_output_name(case, f"{index:04d}")
-            case["legacy_sample_index"] = index
-            case["legacy_output_name"] = output_name
-            cases[output_name] = case
-    if len(cases) != limit:
-        raise ValueError(f"expected {limit} legacy video cases, got {len(cases)}")
-    return cases

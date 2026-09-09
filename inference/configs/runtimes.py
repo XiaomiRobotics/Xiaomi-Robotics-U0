@@ -15,18 +15,6 @@ def runtime_config(engine: str, backend: str, task: str) -> dict:
         raise ValueError(f"unsupported backend: {backend}")
 
     if engine == "ar":
-        if task == "video_gen":
-            return {
-                "backend": "vllm",
-                "tensor_parallel_size": 1,
-                "gpu_memory_utilization": 0.8,
-                "max_num_seqs": 2,
-                "max_num_batched_tokens": 26000,
-                "enable_prefix_caching": False,
-                "enable_chunked_prefill": False,
-                "enable_log_stats": True,
-                "seed": 0,
-            }
         return {
             "backend": "vllm",
             "tensor_parallel_size": 1,

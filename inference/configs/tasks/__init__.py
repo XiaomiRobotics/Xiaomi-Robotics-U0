@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from . import scene_gen, t2i, transfer, video_gen, x2i
+from . import interleave_subtask, interleave_video, scene_gen, t2i, transfer, x2i
 
 
 TASK_MODULES = {
@@ -10,7 +10,8 @@ TASK_MODULES = {
     "x2i": x2i,
     "scene_gen": scene_gen,
     "transfer": transfer,
-    "video_gen": video_gen,
+    "interleave_subtask": interleave_subtask,
+    "interleave_video": interleave_video,
 }
 
 
@@ -23,8 +24,8 @@ def task_config(
     reference_images: list[str] | None = None,
     legacy_video_jsonl: str | None = None,
 ) -> dict[str, Any]:
-    if engine == "flashar" and task == "video_gen":
-        raise ValueError("Xiaomi-Robotics-U0-FlashAR does not support Video Gen")
+    if task in {"interleave_subtask", "interleave_video"} and engine != "ar":
+        raise ValueError("Sequence tasks support AR eager only")
     try:
         module = TASK_MODULES[task]
     except KeyError as exc:

@@ -6,6 +6,23 @@ from configs.compose import compose_dict
 
 
 class TaskConfigTest(unittest.TestCase):
+    def test_ar_defaults_to_34b_checkpoint(self):
+        cfg = compose_dict(engine="ar", backend="eager", task="t2i", num_samples=1)
+        self.assertEqual(cfg["model_size"], "34b")
+        self.assertEqual(cfg["model_path"], "checkpoints/Xiaomi-Robotics-U0")
+
+    def test_4b_checkpoint_is_ar_only(self):
+        cfg = compose_dict(engine="ar", backend="eager", task="x2i", model_size="4b", num_samples=1)
+        self.assertEqual(cfg["model_size"], "4b")
+        self.assertEqual(cfg["model_path"], "../ckpt/Xiaomi-Robotics-U0-4B")
+        with self.assertRaisesRegex(ValueError, "AR-only"):
+            compose_dict(engine="flashar", backend="vllm", task="t2i", model_size="4b", num_samples=1)
+
+    def test_old_sequence_names_are_removed(self):
+        for task in ("video-gen", "video_gen", "interleave"):
+            with self.assertRaisesRegex(ValueError, "unsupported task"):
+                compose_dict(engine="ar", backend="eager", task=task, model_size="4b")
+
     def test_default_uses_active_examples(self):
         cfg = compose_dict(engine="ar", backend="eager", task="t2i")
         self.assertEqual(
@@ -72,16 +89,25 @@ class TaskConfigTest(unittest.TestCase):
             )
         )
 
-    def test_video_gen_rejected_for_flashar(self):
-        with self.assertRaisesRegex(ValueError, "does not support Video Gen"):
-            compose_dict(engine="flashar", backend="vllm", task="video-gen")
+    def test_sequence_tasks_rejected_for_flashar(self):
+        for task in ("interleave_subtask", "interleave_video"):
+            with self.assertRaisesRegex(ValueError, "AR eager only"):
+                compose_dict(engine="flashar", backend="vllm", task=task)
+
+    def test_interleave_uses_sequence_checkpoint_and_eager_only(self):
+        for task in ("interleave_subtask", "interleave_video"):
+            for size, suffix in (("4b", "-4B-Sequence"), ("34b", "-Sequence")):
+                cfg = compose_dict(engine="ar", backend="eager", task=task, model_size=size, num_samples=1)
+                self.assertEqual(cfg["model_path"], "../ckpt/Xiaomi-Robotics-U0" + suffix)
+                self.assertEqual(cfg["task_type"], task)
+            with self.assertRaisesRegex(ValueError, "eager backend only"):
+                compose_dict(engine="ar", backend="vllm", task=task)
 
     def test_multi_gpu_profile_sets_external_cli_resources(self):
         cases = [
             ("ar", "eager", "t2i", {"device_map": "balanced", "model_device": "auto"}),
             ("flashar", "eager", "x2i", {"device_map": "balanced", "flashar_device": "cuda:0"}),
             ("ar", "vllm", "t2i", {"tensor_parallel_size": 2, "max_num_seqs": 4}),
-            ("ar", "vllm", "video-gen", {"tensor_parallel_size": 2, "max_num_seqs": 2}),
             ("flashar", "vllm", "transfer", {"tensor_parallel_size": 2, "max_num_seqs": 4}),
         ]
         for engine, backend, task, expected in cases:

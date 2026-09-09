@@ -79,17 +79,21 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--task",
         required=True,
-        choices=["t2i", "x2i", "scene-gen", "scene_gen", "transfer", "video-gen", "video_gen"],
+        choices=["t2i", "x2i", "scene-gen", "scene_gen", "transfer", "interleave_subtask", "interleave_video"],
     )
     parser.add_argument("--profile", default="single-gpu", choices=["single-gpu", "single_gpu", "multi-gpu", "multi_gpu"])
+    parser.add_argument(
+        "--model-size",
+        choices=["4b", "34b", "38b"],
+        help="Checkpoint size. AR defaults to 34B; FlashAR uses 38B. The 4B checkpoint is AR-only.",
+    )
     parser.add_argument(
         "--num-samples",
         type=int,
         help="Limit default task examples, or repeat CLI-provided prompt/reference overrides.",
     )
     parser.add_argument("--prompt", help="Override the default example prompt or raw task text.")
-    parser.add_argument("--reference-image", action="append", default=[], help="Reference image for X2I/Transfer/Video Gen.")
-    parser.add_argument("--legacy-video-jsonl", help="Optional legacy Video Gen JSONL input file.")
+    parser.add_argument("--reference-image", action="append", default=[], help="Reference image for X2I, Transfer, or Sequence tasks.")
     parser.add_argument(
         "--input-image-type",
         choices=["depth", "rgb"],
@@ -146,10 +150,10 @@ def main() -> None:
             backend=args.backend,
             task=args.task,
             profile=args.profile,
+            model_size=args.model_size,
             num_samples=args.num_samples,
             prompt=args.prompt,
             reference_images=args.reference_image,
-            legacy_video_jsonl=args.legacy_video_jsonl,
             overrides=_cli_overrides(args),
         )
     except ValueError as exc:

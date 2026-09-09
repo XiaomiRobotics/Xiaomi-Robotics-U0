@@ -29,9 +29,8 @@ TASK_ALIASES = {
     "scene_gen": "scene_gen",
     "scene gen": "scene_gen",
     "transfer": "transfer",
-    "video-gen": "video_gen",
-    "video_gen": "video_gen",
-    "video gen": "video_gen",
+    "interleave-subtask": "interleave_subtask",
+    "interleave-video": "interleave_video",
 }
 PROFILE_ALIASES = {
     "single": "single_gpu",
@@ -111,6 +110,7 @@ def compose_dict(
     backend: str,
     task: str,
     profile: str = "single_gpu",
+    model_size: str | None = None,
     num_samples: int | None = None,
     prompt: str | None = None,
     reference_images: list[str] | None = None,
@@ -124,7 +124,7 @@ def compose_dict(
 
     config: dict[str, Any] = {}
     for layer in (
-        base_config(engine, task),
+        base_config(engine, task, model_size=model_size),
         task_config(
             engine,
             task,
@@ -140,6 +140,8 @@ def compose_dict(
         config = deep_merge(config, layer)
     config["engine"] = engine
     config["profile"] = profile
+    if task in {"interleave_subtask", "interleave_video"} and backend != "eager":
+        raise ValueError("Interleave currently supports eager backend only")
     return apply_overrides(config, overrides)
 
 

@@ -5,8 +5,8 @@ This directory contains small public reference assets used by runnable examples.
 - `x2i/`: Single-image references used by the X2I task examples in
   `configs/tasks/x2i.py`. `edit_reference.png` is kept as a simple generic
   image-editing reference.
-- `video-gen/`: Initial observations used by Video Gen examples in
-  `configs/tasks/video_gen.py`.
+- `interleave/subtask/`: Three initial observations for `interleave_subtask`.
+- `interleave/video/`: One initial observation for `interleave_video`.
 - `transfer/`: Transfer input examples. Depth files are horizontal triptychs
   with three `1024x1024` views in `head | hand_left | hand_right` order, for a
   total size of `3072x1024`.

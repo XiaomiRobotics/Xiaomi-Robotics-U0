@@ -5,6 +5,7 @@ scripts/release_review.py
 outputs/
 logs/
 checkpoints/
+ckpt/
 weights/
 /models/
 converted_weights/
@@ -15,12 +16,12 @@ converted_weights/
 *.ckpt
 *.npz
 *.png
-!assets/*.png
-!examples/assets/*.png
-!examples/assets/**/*.png
+!/inference/assets/*.png
+!/inference/examples/assets/*.png
+!/inference/examples/assets/**/*.png
 *.jpg
 *.jpeg
-!assets/*.jpeg
+!/inference/assets/*.jpeg
 *.webp
 *.pb
 *.log
