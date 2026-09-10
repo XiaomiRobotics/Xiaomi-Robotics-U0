@@ -21,23 +21,8 @@ checkpoints, and Ulysses sequence parallelism. Inference code and runnable
 examples are maintained in the
 [Xiaomi-Robotics-U0 inference branch](https://github.com/XiaomiRobotics/Xiaomi-Robotics-U0/tree/dev/4b-ar-inference).
 
-## Table of Contents
 
-1. [Model & Weights](#1-model--weights)
-2. [Installation](#2-installation)
-3. [Training](#3-training)
-4. [Project Structure](#4-project-structure)
-5. [Citation](#5-citation)
-
-## 1. Model & Weights
-
-| Model | Description | Hugging Face | ModelScope |
-| :-- | :-- | :--: | :--: |
-| Xiaomi-Robotics-U0-4B-Single-Step | Distilled 4B model for single-step generation | [Link](HUGGING_FACE_4B_SINGLE_STEP_LINK_TBD) | [Link](MODELSCOPE_4B_SINGLE_STEP_LINK_TBD) |
-| Xiaomi-Robotics-U0-4B-Sequence | Distilled 4B model for sequence generation | [Link](HUGGING_FACE_4B_SEQUENCE_LINK_TBD) | [Link](MODELSCOPE_4B_SEQUENCE_LINK_TBD) |
-| Xiaomi-Robotics-U0-34B-Sequence | 34B model for sequence generation | [Link](HUGGING_FACE_34B_SEQUENCE_LINK_TBD) | [Link](MODELSCOPE_34B_SEQUENCE_LINK_TBD) |
-
-## 2. Installation
+## 1. Installation
 
 The recommended environment is Python 3.10, CUDA, PyTorch 2.7, Transformers
 4.57, and FlashAttention 2.
@@ -57,7 +42,7 @@ pip install -e . --no-deps
 Install a FlashAttention 2 build compatible with the local PyTorch and CUDA
 versions before training.
 
-## 3. Training
+## 2. Training
 
 The repository provides the following training presets:
 
@@ -102,7 +87,7 @@ To enable Ulysses SP=2 for 34B, set `parallel.ulysses_size: 2` in
 bash scripts/train/run_u0_34b.sh
 ```
 
-## 4. Project Structure
+## 3. Project Structure
 
 ```text
 wm-fsdp-release/
@@ -123,7 +108,7 @@ wm-fsdp-release/
 └── requirements.txt          # Python runtime dependencies
 ```
 
-## 5. Citation
+## 4. Citation
 
 If you find this work useful, please cite:
 
