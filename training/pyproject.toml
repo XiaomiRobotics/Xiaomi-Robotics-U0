@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wm-fsdp"
+version = "0.1.0"
+description = "PyTorch FSDP training for multimodal causal language models."
+requires-python = ">=3.10"
+dependencies = [
+  "accelerate>=0.34.0",
+  "einops>=0.6.1",
+  "numpy>=1.26,<2",
+  "omegaconf>=2.3",
+  "Pillow>=10.0",
+  "safetensors>=0.6",
+  "tiktoken>=0.8",
+  "torch>=2.7,<2.8",
+  "transformers>=4.57,<4.58",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120

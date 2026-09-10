@@ -76,7 +76,9 @@ The repository supports both eager execution and vLLM backends for AR and FlashA
 
 ## Training
 
-Training code and environment configuration are reserved for [`training/README.md`](training/README.md) and will be added in a future release.
+The PyTorch FSDP training framework for Xiaomi-Robotics-U0 is available in
+[`training/README.md`](training/README.md). It provides 4B and 34B distributed
+training presets with long-context packed data and Ulysses sequence parallelism.
 
 ## Citation
 

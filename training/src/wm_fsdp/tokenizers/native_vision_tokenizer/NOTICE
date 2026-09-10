@@ -1,0 +1,3 @@
+The native U0 IBQ implementation in this directory is derived from the
+Xiaomi-Robotics-U0 vision tokenizer implementation. It is included under the
+Apache License, Version 2.0. The tokenizer checkpoint is not included.

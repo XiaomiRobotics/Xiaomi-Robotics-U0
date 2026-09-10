@@ -1,0 +1,23 @@
+{
+  "type": "megatron_packed",
+  "format": "multimodal_sft_v1",
+  "seed": 42,
+  "weighted_sampling": true,
+  "sampling_policy": "weighted_with_replacement",
+  "sequence_length": 16384,
+  "pad_token_id": 151643,
+  "cls_token_id": 151849,
+  "eod_token_id": 151850,
+  "multimodal_visual_start_end_tokens": [151851, 151852, 151853],
+  "supervision_tokens": [151746, 151747],
+  "vocab_size": 282926,
+  "max_open_files": 64,
+  "prefix_block_size": 256,
+  "datasets": [
+    {
+      "name": "example_dataset",
+      "path": "/path/to/megatron/indexed/dataset",
+      "weight": 1.0
+    }
+  ]
+}
